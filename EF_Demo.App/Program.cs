@@ -1,5 +1,4 @@
 ﻿using EF_Demo.DB;
-using Microsoft.EntityFrameworkCore;
 
 namespace EF_Demo.App
 {
@@ -30,19 +29,28 @@ namespace EF_Demo.App
             foreach (var user in users)
             {
                 Console.WriteLine($"#{user.Id}: {user.LastName} {user.FirstName}, {user.Age}");
+                if (user.Contacts is null) continue;
+                foreach (var contact in user.Contacts)
+                {
+                    Console.WriteLine($"{contact.Type} -> {contact.Content}: {contact.User}");
+                }
             }
         }
 
         private static void AddUsers(DataBase db)
         {
-            db.Users.AddRange(
-                new User("User 1", "Users", 20),
-                new User("User 2", "Users", 20),
-                new User("User 3", "Users", 20),
-                new User("User 4", "Users", 20),
-                new User("User 5", "Users", 20),
-                new User("User 6", "Users", 20)
-            );
+            var user1 = new User("User 1", "Users", 20);
+            var user2 = new User("User 2", "Users", 20);
+            var user3 = new User("User 3", "Users", 20);
+            var user4 = new User("User 4", "Users", 20);
+            var user5 = new User("User 5", "Users", 20);
+            db.Users.AddRange(user1, user2, user3, user4, user5);
+
+            var contact1 = new Contact("phone", "+79042144491", user1);
+            var contact2 = new Contact("phone", "2575755", user1);
+            var contact3 = new Contact("address", "Voronezh", user3);
+            db.Contacts.AddRange(contact1, contact2, contact3);
+            
             db.SaveChanges();
         }
     }

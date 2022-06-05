@@ -5,6 +5,7 @@ namespace EF_Demo.DB;
 public sealed class DataBase : DbContext
 {
     public DbSet<User> Users => Set<User>();
+    public DbSet<Contact> Contacts => Set<Contact>();
 
     public DataBase()
     {
