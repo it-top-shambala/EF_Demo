@@ -22,6 +22,34 @@ namespace EF_Demo.App
             user.Age = 30;
             db.SaveChanges();
             PrintUsers(db.Users);
+
+            var users = db.Users;
+            var contacts = db.Contacts;
+            var res1 = users.First(u => u.FirstName == "User 2");
+            var res2 = (from user1 in users
+                where user1.FirstName == "User 2"
+                select user1.LastName).First();
+            var res3 = users.Where(u => u.FirstName == "User 2").Select(u => u.LastName).First();
+            Console.WriteLine(res1);
+            Console.WriteLine(res2);
+            Console.WriteLine(res3);
+
+            var res5 = users.Join(contacts, 
+                u => u.Id, 
+                c => c.UserId, 
+                (u, c) => new {u.FirstName, u.LastName, c.Type, c.Content});
+            foreach (var u in res5)
+            {
+                Console.WriteLine($"{u.LastName} {u.FirstName} : {u.Type} {u.Content}");
+            }
+
+            var res6 = from user2 in users
+                join contact in contacts on user2.Id equals contact.UserId
+                select new { user2.FirstName, user2.LastName, contact.Type, contact.Content };
+            foreach (var u in res6)
+            {
+                Console.WriteLine($"{u.LastName} {u.FirstName} : {u.Type} {u.Content}");
+            }
         }
 
         private static void PrintUsers(IEnumerable<User> users)
