@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EF_Demo.App;
+namespace EF_Demo.DB;
 
 public sealed class DataBase : DbContext
 {

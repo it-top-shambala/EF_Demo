@@ -1,4 +1,4 @@
-﻿namespace EF_Demo.App;
+﻿namespace EF_Demo.DB;
 
 public record User
 {

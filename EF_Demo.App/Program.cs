@@ -1,4 +1,6 @@
-﻿namespace EF_Demo.App
+﻿using EF_Demo.DB;
+
+namespace EF_Demo.App
 {
     internal static class Program
     {
@@ -6,7 +8,7 @@
         {
             var db = new DataBase();
 
-            db.Users.Add(new()
+            db.Users.Add(new User
             {
                 FirstName = "Andrey",
                 LastName = "Starinin",
